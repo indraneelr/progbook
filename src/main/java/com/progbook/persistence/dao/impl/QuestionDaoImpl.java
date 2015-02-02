@@ -4,7 +4,6 @@ import com.progbook.persistence.dao.QuestionDao;
 import com.progbook.persistence.model.Question;
 import com.progbook.persistence.model.QuestionTag;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,15 +31,15 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public Question fetch(String title){
-        TypedQuery<Question> query = entityManager.createQuery("select q from Question q where q.title=:title", Question.class);
-        query.setParameter("title",title);
-        return query.getSingleResult();
+    public List<Question> filterByTitle(String title){
+        TypedQuery<Question> query = entityManager.createQuery("select q from Question q where q.title like :title", Question.class);
+        query.setParameter("title",'%'+title+'%');
+        return query.getResultList();
     }
 
     @Override
     public List<Question> fetchByTags(List<QuestionTag> questionTags){
-        TypedQuery<Question> query = entityManager.createQuery("select q from Question q inner join QuestionTag qt where qt in (:tags)", Question.class);
+        TypedQuery<Question> query = entityManager.createQuery("select q from Question q inner join q.tags tags where tags in :tags", Question.class);
         query.setParameter("tags",questionTags);
         return query.getResultList();
     }
@@ -48,5 +47,12 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public void delete(Question question) {
 
+    }
+
+    @Override
+    public Question fetch(String uuid) {
+        TypedQuery<Question> query = entityManager.createQuery("select q from Question q where q.uuid = :uuid", Question.class);
+        query.setParameter("uuid",uuid);
+        return query.getSingleResult();
     }
 }

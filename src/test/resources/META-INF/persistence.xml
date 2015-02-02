@@ -2,9 +2,9 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="testPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.progbook.persistence.model.Category</class>
         <class>com.progbook.persistence.model.Question</class>
         <class>com.progbook.persistence.model.Answer</class>
-        <class>com.progbook.persistence.model.Category</class>
         <class>com.progbook.persistence.model.Language</class>
         <class>com.progbook.persistence.model.Person</class>
         <class>com.progbook.persistence.model.QuestionTag</class>
@@ -13,6 +13,7 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--<property name="hibernate.show_sql" value="true" />-->
             <!--<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>-->
             <property name="hibernate.connection.charSet" value="UTF-8"/>
         </properties>

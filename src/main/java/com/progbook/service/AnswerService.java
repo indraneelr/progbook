@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface AnswerService {
     Set<Answer> fetchByQuestion(String questionId);
-    Set<Answer> fetchByQuestionAndLanguages(String questionId,List<String> languageIds);
+    List<Answer> fetchByQuestionAndLanguages(String questionUuid, List<String> languageNames);
     Answer fetchById(String answerId);
     Integer getVoteCountFor(String answerId);
 

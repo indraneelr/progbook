@@ -17,6 +17,9 @@ public class Person {
     @Column
     private String email;
 
+    @Column
+    private String uuid;
+
     public long getId() {
         return id;
     }
@@ -39,5 +42,30 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+
+        Person person = (Person) o;
+
+        if (uuid != null ? !uuid.equals(person.uuid) : person.uuid != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid != null ? uuid.hashCode() : 0;
     }
 }

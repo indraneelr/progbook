@@ -2,6 +2,8 @@ package com.progbook.persistence.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "comment")
@@ -24,6 +26,9 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person creator;
+
+    @Column
+    private String uuid;
 
     public long getId() {
         return id;
@@ -64,4 +69,30 @@ public class Comment {
     public void setCreator(Person creator) {
         this.creator = creator;
     }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+
+        Comment comment = (Comment) o;
+
+        if (uuid != null ? !uuid.equals(comment.uuid) : comment.uuid != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return uuid != null ? uuid.hashCode() : 0;
+    }
+
 }

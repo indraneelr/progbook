@@ -16,8 +16,13 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Question fetchByTitle(String title) {
-        return questionDao.fetch(title);
+    public List<Question> fetchAll() {
+        return questionDao.fetchAll();
+    }
+
+    @Override
+    public List<Question> filterByTitle(String title) {
+        return questionDao.filterByTitle(title);
     }
 
     @Override
@@ -31,8 +36,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question fetchById(String id) {
-        return null;
+    public Question fetchByUuid(String uuid) {
+        return questionDao.fetch(uuid);
     }
 
     @Override

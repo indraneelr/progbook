@@ -13,9 +13,11 @@ public interface QuestionDao {
     Question fetch(long id);
     List<Question> fetchAll();
 
-    Question fetch(String title);
+    List<Question> filterByTitle(String title);
 
     List<Question> fetchByTags(List<QuestionTag> questionTags);
 
     void delete(Question question);
+
+    Question fetch(String uuid);
 }

@@ -19,6 +19,13 @@ public class QuestionTag {
     @Column
     private String description;
 
+    public QuestionTag() {}
+
+    public QuestionTag(long id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

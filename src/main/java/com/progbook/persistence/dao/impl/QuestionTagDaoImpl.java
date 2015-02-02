@@ -33,7 +33,7 @@ public class QuestionTagDaoImpl implements QuestionTagDao {
 
     @Override
     public List<QuestionTag> fetchByNames(List<String> names) {
-        TypedQuery<QuestionTag> query = entityManager.createQuery("select qt from QuestionTag qt where qt.name in (:names)", QuestionTag.class);
+        TypedQuery<QuestionTag> query = entityManager.createQuery("select qt from QuestionTag qt where qt.name in :names", QuestionTag.class);
         query.setParameter("names",names);
         return query.getResultList();
     }

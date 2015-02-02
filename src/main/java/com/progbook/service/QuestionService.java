@@ -7,10 +7,12 @@ import java.util.Set;
 
 public interface QuestionService {
 
-    Question fetchByTitle(String title);
+    List<Question> fetchAll();
+
+    List<Question> filterByTitle(String title);
     Set<Question> fetchByCategory(String category);
     Set<Question> fetchByTags(List<String> tags);
-    Question fetchById(String id);
+    Question fetchByUuid(String id);
 
     void save(Question question);
     void delete(String id);

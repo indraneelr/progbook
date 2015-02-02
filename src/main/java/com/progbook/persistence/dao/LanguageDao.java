@@ -6,12 +6,13 @@ import com.progbook.persistence.model.Question;
 
 import java.util.List;
 
-public interface AnswerDao {
-    void save(Answer answer);
-    Answer fetch(long id);
-    List<Answer> fetchAll();
+public interface LanguageDao {
+    void save(Language language);
+    Language fetch(long id);
+    Language fetch(String uuid);
+    List<Language> fetchAll();
 
-    List<Answer> fetchByQuestionAndLanguages(Question question, List<Language> languages);
+    List<Language> fetchByNames(List<String> name);
 
     void delete(Answer answer);
 }
