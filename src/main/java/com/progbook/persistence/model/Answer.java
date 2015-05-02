@@ -12,7 +12,7 @@ public class Answer {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "language_id")
     private Language language;
 
@@ -22,7 +22,7 @@ public class Answer {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 

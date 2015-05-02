@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface LanguageService {
-    Language fetchById(String id);
+    Language fetchByUuid(String id);
     List<Language> fetchAll();
     Set<Language> fetchByAnswer(String answerId);
 

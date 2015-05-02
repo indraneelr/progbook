@@ -8,16 +8,9 @@ import java.util.List;
 /**
  * Created by neel on 26-12-2014.
  */
-public interface QuestionDao {
-    void save(Question question);
-    Question fetch(long id);
-    List<Question> fetchAll();
-
+public interface QuestionDao extends AbstractDao<Question> {
     List<Question> filterByTitle(String title);
-
     List<Question> fetchByTags(List<QuestionTag> questionTags);
 
-    void delete(Question question);
-
-    Question fetch(String uuid);
+    Integer getAnswerCount(String questionUuid);
 }

@@ -19,10 +19,10 @@ public class CommonDbOperations {
                     .values("3", "functions", "how to write a function")
                     .build(),
             insertInto("language")
-                    .columns("id", "name", "description")
-                    .values("1", "java", "java lang")
-                    .values("2", "javascript", "a web lang")
-                    .values("3", "python", "snake lang")
+                    .columns("id", "name", "description","uuid")
+                    .values("1", "java", "java lang","uuid-001")
+                    .values("2", "javascript", "a web lang","uuid-002")
+                    .values("3", "python", "snake lang","uuid-003")
                     .build(),
             insertInto("question_tag")
                     .columns("id", "name", "description")
@@ -62,7 +62,7 @@ public class CommonDbOperations {
     public static final Operation INSERT_ANSWERS_STARTER_SET = sequenceOf(
             insertInto("answer")
                     .columns("id", "content", "question_id", "language_id", "person_id", "uuid", "date_created")
-                    .values("100", "Its simple. RTFM", "100", "1", "2", "answer-uuid-100", "2015-01-30 20:20:20")
+                    .values("100", "Its simple. RTFM", "100", "2", "1", "answer-uuid-100", "2015-01-30 20:20:20")
                     .values("101", "Its not that simple. Its java. RTFM", "100", "1", "1", "answer-uuid-101", "2015-01-30 20:20:20")
                     .values("106", "Just google dude!!", "100", "3","1", "answer-uuid-106", "2015-01-30 20:20:20")
                     .values("102", "for(int i=0;i<n;i++){}", "101", "1", "1", "answer-uuid-102", "2015-01-30 20:20:20")

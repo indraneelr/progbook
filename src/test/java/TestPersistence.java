@@ -30,6 +30,9 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({ "classpath:TestApplicationContext.xml" })
 public class TestPersistence {
 
+    @PersistenceContext
+    EntityManager entityManager;
+
     @Autowired
     QuestionDao questionDao;
 
@@ -40,12 +43,13 @@ public class TestPersistence {
     @Transactional
     public void shouldSaveAndRetrieveQuestion() {
         Question question = createQuestion("awesome question", "whats the question?", "java");
-        Answer answer = createAnswer("its about whether this works!!",question,"english");
-        question.setAnswers(new HashSet<>(Arrays.asList(answer)));
         questionDao.save(question);
         List<Question> questions = questionDao.fetchAll();
         assertEquals(1,questions.size());
         Question firstQuestion = questions.get(0);
+        Answer answer = createAnswer("its about whether this works!!",firstQuestion,null);
+        answerDao.save(answer);
+        entityManager.refresh(firstQuestion);
         assertEquals("awesome question", firstQuestion.getTitle());
         assertEquals(1, firstQuestion.getAnswers().size());
         assertEquals("its about whether this works!!", firstQuestion.getAnswers().iterator().next().getContent());
@@ -54,12 +58,16 @@ public class TestPersistence {
     @Test
     @Transactional
     public void shouldSaveAndRetriveAnswers(){
-        Answer answer = createAnswer("its about whether this works!!",createQuestion("question","whats this about?","general"),"english");
+        Question question = createQuestion("awesome question", "whats the question?", "java");
+        questionDao.save(question);
+        List<Question> questions = questionDao.fetchAll();
+
+        Answer answer = createAnswer("its about whether this works!!",questions.get(0),null);
         answerDao.save(answer);
         List<Answer> answers = answerDao.fetchAll();
         assertEquals(1,answers.size());
         assertNotNull(answers.get(0).getQuestion());
-        assertEquals("question", answers.get(0).getQuestion().getTitle());
+        assertEquals("awesome question", answers.get(0).getQuestion().getTitle());
     }
 
     private Question createQuestion(String title, String content, String category) {
@@ -72,12 +80,12 @@ public class TestPersistence {
         return question;
     }
 
-    private Answer createAnswer(String content, Question question, String language){
+    private Answer createAnswer(String content, Question question, Language language){
         Answer answer = new Answer();
         answer.setContent(content);
-        Language lang = new Language();
-        lang.setName(language);
-        answer.setLanguage(lang);
+//        Language lang = new Language();
+//        lang.setName(language);
+        answer.setLanguage(language);
         answer.setQuestion(question);
         return answer;
     }

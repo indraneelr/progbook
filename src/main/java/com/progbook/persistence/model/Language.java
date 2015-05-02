@@ -16,13 +16,25 @@ public class Language {
     @Column
     private String description;
 
-    public Language() {
-    }
+    @Column
+    private String uuid;
 
-    public Language(long id, String name, String description) {
+    @Column
+    private String version;
+
+    public Language(long id, String uuid, String description, String name, String version) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.uuid = uuid;
+        this.version = version;
+    }
+
+    public Language() {
+    }
+
+    public Language(long id) {
+        this.id = id;
     }
 
     public long getId() {
@@ -47,5 +59,21 @@ public class Language {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

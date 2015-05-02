@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class TagsServiceImpl implements TagsService {
@@ -16,8 +15,8 @@ public class TagsServiceImpl implements TagsService {
     private QuestionTagDao questionTagDao;
 
     @Override
-    public QuestionTag fetchById(long id) {
-        return questionTagDao.fetch(id);
+    public QuestionTag fetchByUuid(String uuid) {
+        return questionTagDao.fetchByUuid(uuid);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public void delete(String id) {
-
+    public void delete(String uuid) {
+        questionTagDao.delete(questionTagDao.fetchByUuid(uuid));
     }
 }

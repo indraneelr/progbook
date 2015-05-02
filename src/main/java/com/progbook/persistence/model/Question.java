@@ -42,6 +42,13 @@ public class Question {
     @JoinColumn(name = "person_id")
     private Person creator;
 
+    public Question() {
+    }
+
+    public Question(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

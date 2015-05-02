@@ -37,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question fetchByUuid(String uuid) {
-        return questionDao.fetch(uuid);
+        return questionDao.fetchByUuid(uuid);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Integer getAnswerCountFor(String questionId) {
-        return null;
+    public Integer getAnswerCountFor(String questionUuid) {
+        return questionDao.getAnswerCount(questionUuid);
     }
 }

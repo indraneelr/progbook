@@ -14,23 +14,18 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class AnswerDaoImpl implements AnswerDao {
+public class AnswerDaoImpl extends AbstractDaoImpl<Answer> implements AnswerDao {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public void save(Answer answer) {
-        entityManager.persist(answer);
+    protected EntityManager getEntityManager() {
+        return entityManager;
     }
 
     @Override
-    public Answer fetch(long id) {
-        return entityManager.find(Answer.class,id);
-    }
-
-    @Override
-    public List<Answer> fetchAll() {
-        return entityManager.createQuery("Select a from Answer a",Answer.class).getResultList();
+    protected Class<Answer> getClassType() {
+        return Answer.class;
     }
 
     @Override
@@ -44,9 +39,5 @@ public class AnswerDaoImpl implements AnswerDao {
                 .setParameter("question",question)
                 .setParameter("languages",languages)
                 .getResultList();
-    }
-    @Override
-    public void delete(Answer answer) {
-
     }
 }

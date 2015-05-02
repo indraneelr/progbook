@@ -1,19 +1,39 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+def querydslVersion =  "3.6.3"
 
 sourceCompatibility = 1.7
 version = '1.0'
+
+jar {
+    baseName = 'progbook'
+    version =  '0.1.0'
+}
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
+/*
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group :'com.ninja-squad', name:'DbSetup', version:'1.3.1'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
     compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.2'
+    compile("org.springframework.boot:spring-boot-starter-web")
     compile group: 'org.springframework', name:'spring-context', version:'4.0.3.RELEASE'
-    compile group: 'org.springframework', name:'spring-webmvc', version:'4.0.3.RELEASE'
     compile group: 'org.springframework', name:'spring-tx', version:'4.0.3.RELEASE'
     compile group: 'org.springframework', name:'spring-orm', version:'4.0.3.RELEASE'
     compile group: 'org.springframework', name:'spring-jdbc', version:'4.0.3.RELEASE'
@@ -22,4 +42,58 @@ dependencies {
     compile group: 'org.hibernate', name:'hibernate-entitymanager', version:'4.3.5.Final'
     compile group: 'mysql', name:'mysql-connector-java', version:'5.1.9'
     compile group: 'commons-dbcp', name:'commons-dbcp', version:'1.4'
+}*/
+
+// queryDsl configuration
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+// queryDsl configuration ends
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '1.3.1'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.2'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.9'
+    compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+//    compile "com.mysema.querydsl:querydsl-core:$querydslVersion"
+    compile "com.mysema.querydsl:querydsl-jpa:$querydslVersion"
+    querydslapt "com.mysema.querydsl:querydsl-apt:$querydslVersion"
 }

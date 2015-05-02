@@ -6,6 +6,7 @@ import java.util.Date;
 @Entity
 @Table(name = "vote")
 public class Vote {
+
     @Id
     @Column(name="id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class Vote {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person creator;
+
 
     public long getId() {
         return id;

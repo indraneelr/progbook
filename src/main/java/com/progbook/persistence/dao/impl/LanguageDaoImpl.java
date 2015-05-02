@@ -10,29 +10,23 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class LanguageDaoImpl implements LanguageDao {
+public class LanguageDaoImpl extends AbstractDaoImpl<Language> implements LanguageDao {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
+    protected EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    @Override
+    protected Class<Language> getClassType() {
+        return Language.class;
+    }
+
+    @Override
     public void save(Language language) {
         entityManager.persist(language);
-    }
-
-    @Override
-    public Language fetch(long id) {
-        return entityManager.find(Language.class,id);
-    }
-
-    @Override
-    public Language fetch(String uuid) {
-        return entityManager.createQuery("select l from Language l where l.uuid = :uuid",Language.class)
-                .setParameter("uuid",uuid).getSingleResult();
-    }
-
-    @Override
-    public List<Language> fetchAll() {
-        return entityManager.createQuery("select l from Language",Language.class).getResultList();
     }
 
     @Override
@@ -41,8 +35,4 @@ public class LanguageDaoImpl implements LanguageDao {
                 .setParameter("names",names).getResultList();
     }
 
-    @Override
-    public void delete(Answer answer) {
-
-    }
 }

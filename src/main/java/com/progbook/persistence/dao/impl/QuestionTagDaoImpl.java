@@ -11,24 +11,19 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class QuestionTagDaoImpl implements QuestionTagDao {
+public class QuestionTagDaoImpl extends AbstractDaoImpl<QuestionTag> implements QuestionTagDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public void save(QuestionTag questionTag) {
-        entityManager.persist(questionTag);
+    protected EntityManager getEntityManager() {
+        return entityManager;
     }
 
     @Override
-    public QuestionTag fetch(long id) {
-        return entityManager.find(QuestionTag.class,id);
-    }
-
-    @Override
-    public List<QuestionTag> fetchAll() {
-        return entityManager.createQuery("select qt from QuestionTag qt",QuestionTag.class).getResultList();
+    protected Class<QuestionTag> getClassType() {
+        return QuestionTag.class;
     }
 
     @Override
@@ -36,10 +31,5 @@ public class QuestionTagDaoImpl implements QuestionTagDao {
         TypedQuery<QuestionTag> query = entityManager.createQuery("select qt from QuestionTag qt where qt.name in :names", QuestionTag.class);
         query.setParameter("names",names);
         return query.getResultList();
-    }
-
-    @Override
-    public void delete(QuestionTag questionTag) {
-        entityManager.remove(questionTag);
     }
 }

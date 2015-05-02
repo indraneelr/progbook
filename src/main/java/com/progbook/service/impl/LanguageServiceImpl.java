@@ -20,8 +20,8 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public Language fetchById(String uuid) {
-        return languageDao.fetch(uuid);
+    public Language fetchByUuid(String uuid) {
+        return languageDao.fetchByUuid(uuid);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public void delete(String id) {
-
+    public void delete(String uuid) {
+        languageDao.delete(languageDao.fetchByUuid(uuid));
     }
 
     @Override
