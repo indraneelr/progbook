@@ -1,12 +1,12 @@
-package com.progbook.persistence.dao.impl;
+package com.progbook.specification;
 
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.progbook.FilterCriteria;
 import com.progbook.persistence.CommonDbOperations;
+import com.progbook.persistence.dao.impl.GenericRepository;
 import com.progbook.persistence.model.Answer;
-import com.progbook.persistence.model.Language;
-import com.progbook.persistence.model.QAnswer;
 import com.progbook.persistence.model.Question;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,26 +16,23 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaMetamodelEntityInformation;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:TestApplicationContext.xml" })
-public class GenericRepositoryTest {
+public class QdslQuestionFilterTest {
 
-    JpaEntityInformation<Answer,Long> jpaEntityInformation;
+    JpaEntityInformation<Question,Long> jpaEntityInformation;
 
     @Autowired
     EntityManager entityManager;
 
-    GenericRepository<Answer,Long> answerRepository;
+    GenericRepository<Question,Long> questionRepository;
 
     @Autowired
     DataSource dataSource;
@@ -46,27 +43,25 @@ public class GenericRepositoryTest {
     public void setup(){
         DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), CommonDbOperations.LOAD_STARTER_DATASET);
         dbSetupTracker.launchIfNecessary(dbSetup);
-        jpaEntityInformation = new JpaMetamodelEntityInformation<>(Answer.class,entityManager.getMetamodel());
-        answerRepository = new GenericRepository<>(jpaEntityInformation,entityManager);
+        jpaEntityInformation = new JpaMetamodelEntityInformation<>(Question.class,entityManager.getMetamodel());
+        questionRepository = new GenericRepository<>(jpaEntityInformation,entityManager);
     }
 
     @Test
-    public void shouldFindAllAnswersForAQuestion(){
-        List<Answer> answers = answerRepository.findAll(QAnswer.answer.question.uuid.eq("question-uuid-100"));
-        assertEquals(3,answers.size());
+    public void shouldRetrieveQuestionsWithGivenTags(){
+        FilterCriteria filterCriteria = new FilterCriteria();
+        filterCriteria.put("tags","loops,setup");
+        List<Question> questions = questionRepository.findAll(filterCriteria.toPredicate(Question.class));
+
+        assertEquals(3,questions.size());
     }
 
-    @Transactional
     @Test
-    public void shouldSaveAnswerForAQuestion(){
-        Answer answer = new Answer();
-        answer.setContent("querydsl answer!");
-        answer.setLanguage(new Language(1));
-        answer.setQuestion(new Question(100));
+    public void shouldRetrieveQuestionsWithGivenUuid(){
+        FilterCriteria filterCriteria = new FilterCriteria();
+        filterCriteria.put("uuid","question-uuid-100");
+        Question question = questionRepository.findOne(filterCriteria.toPredicate(Question.class));
 
-        Answer newAnswer = answerRepository.save(answer);
-
-        assertNotNull(newAnswer);
-        assertThat(newAnswer.getId(),is(not(0L)));
+        assertEquals(100,question.getId());
     }
 }

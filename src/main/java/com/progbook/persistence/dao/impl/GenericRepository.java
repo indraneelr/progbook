@@ -1,8 +1,6 @@
 package com.progbook.persistence.dao.impl;
 
 import com.mysema.query.types.Predicate;
-import com.progbook.specification.PredicateWrapper;
-import com.progbook.specification.QdslPredicateWrapper;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
@@ -20,12 +18,16 @@ public class GenericRepository<T,ID extends Serializable>{
         queryDslJpaRepository = new QueryDslJpaRepository<>(entityManagerInformation,entityManager);
     }
 
-    public List<T> findAll(PredicateWrapper<Predicate> qdslPredicateWrapper){
-        return queryDslJpaRepository.findAll(qdslPredicateWrapper.toPredicate());
+    public List<T> findAll(Predicate predicate){
+        return queryDslJpaRepository.findAll(predicate);
     }
 
-    public T findOne(PredicateWrapper<Predicate> qdslPredicateWrapper){
-        return queryDslJpaRepository.findOne(qdslPredicateWrapper.toPredicate());
+    public List<T> findAll(){
+        return queryDslJpaRepository.findAll();
+    }
+
+    public T findOne(Predicate predicate){
+        return queryDslJpaRepository.findOne(predicate);
     }
 
     public T save(T entity){

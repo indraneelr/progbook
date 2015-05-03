@@ -1,12 +1,12 @@
 package com.progbook;
 
+import com.mysema.query.types.Predicate;
 import com.progbook.specification.builder.FilterSpecBuilderFactory;
-import com.progbook.specification.PredicateWrapper;
 
 import java.util.HashMap;
 
-public class FilterCriteria<T> extends HashMap<String,String> {
-    public PredicateWrapper<T> toPredicate(Class entityType,Class<T> predicateType){
-        return FilterSpecBuilderFactory.getFilterSpecBuilder(entityType,predicateType).build(this);
+public class FilterCriteria extends HashMap<String,String> {
+    public Predicate toPredicate(Class entityType){
+        return FilterSpecBuilderFactory.getFilterSpecBuilder(entityType).build(this);
     }
 }

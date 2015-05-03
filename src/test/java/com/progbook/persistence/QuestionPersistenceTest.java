@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:TestApplicationContext.xml" })
@@ -41,9 +42,11 @@ public class QuestionPersistenceTest {
     @Test
     public void shouldFetchQuestionsByTags(){
         dbSetupTracker.skipNextLaunch();
-        List<Question> questions = questionDao.fetchByTags(Arrays.asList(new QuestionTag(2,"loops")));
+        List<Question> questions = questionDao.fetchByTags(Arrays.asList(new QuestionTag(2,"loops"),new QuestionTag(1,"setup")));
         assertNotNull(questions);
-        assertEquals(2, questions.size());
+        assertEquals(3, questions.size());
+        assertNotNull(questions.get(0).getTags());
+        assertTrue(questions.get(0).getTags().size()>0);
     }
 
     @Test

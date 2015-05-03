@@ -1,5 +1,9 @@
 package com.progbook.persistence.model;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.persistence.metamodel.ListAttribute;
 import java.util.Date;
@@ -30,17 +34,21 @@ public class Question {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="question_tags_map",joinColumns = {@JoinColumn(name = "question_id")},inverseJoinColumns = {@JoinColumn(name = "question_tag_id")})
     private List<QuestionTag> tags;
 
     // if you remove cascadeType.all answers will not be saved.
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question")
     private Set<Answer> answers;
 
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person creator;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
+    private List<ContentBlock> contentBlocks;
 
     public Question() {
     }

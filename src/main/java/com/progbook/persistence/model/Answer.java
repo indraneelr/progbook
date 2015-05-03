@@ -1,5 +1,8 @@
 package com.progbook.persistence.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +39,7 @@ public class Answer {
     @Transient
     private int votes;
 
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "answer",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Comment> comments;
 

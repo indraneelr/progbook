@@ -42,7 +42,7 @@ public class CommonDbOperations {
     public static final Operation INSERT_QUESTIONS_STARTER_SET = sequenceOf(
             insertInto("question")
                     .columns("id", "content", "title", "category_id", "person_id", "uuid", "date_created")
-                    .values("100", "How do you setup the dev environment for this?", "dev env setup", "1", "1", "question-uuid-100", "2015-01-30 21:21:21")
+                        .values("100", "How do you setup the dev environment for this?", "dev env setup", "1", "1", "question-uuid-100", "2015-01-30 21:21:21")
                     .values("101", "How do you write a for loop in this?", "for loop", "2", "1", "question-uuid-101", "2015-01-30 20:20:20")
                     .values("102", "How do you write a while loop in this?", "while loop", "2", "1", "question-uuid-102", "2015-01-30 20:20:20")
                     .values("103", "How do you write a method in this?", "writing functions", "3", "1", "question-uuid-103", "2015-01-30 20:21:20")
