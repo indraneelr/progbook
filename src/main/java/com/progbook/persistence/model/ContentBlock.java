@@ -1,5 +1,7 @@
 package com.progbook.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +20,8 @@ public class ContentBlock {
     @Column
     private String content;
 
-    @Column
-    private Integer sequence;
+    @Column(name = "sequence_number")
+    private Integer sequenceNumber;
 
     @Column
     private String title;
@@ -33,16 +35,18 @@ public class ContentBlock {
     @ManyToMany
     private List<QuestionTag> tags;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     private Answer answer;
 
     @ManyToOne
     private Language language;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person creator;
 
@@ -69,12 +73,12 @@ public class ContentBlock {
         this.content = content;
     }
 
-    public Integer getSequence() {
-        return sequence;
+    public Integer getSequenceNumber() {
+        return sequenceNumber;
     }
 
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
+    public void setSequenceNumber(Integer sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public String getTitle() {

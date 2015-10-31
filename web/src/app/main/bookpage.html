@@ -1,0 +1,15 @@
+<div class="page" layout="row">
+    <aside flex="30" id="toc">
+        <h3>Questions</h3>
+        <nav ng-repeat="question in main.questions">
+            <span><a ng-href="" ng-click="main.setCurrentQ($index)">{{question.title}}</a></span>
+        </nav>
+    </aside>
+    <main flex layout="column">
+        <question content="main.questionContainer"></question>
+        <section id="answers">
+            <h3>Answers</h3>
+            <answer ng-repeat="answer in main.getAnswers()" content="answer"></answer>
+        </section>
+    </main>
+</div>

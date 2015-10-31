@@ -1,12 +1,10 @@
 package com.progbook.specification.builder.impl;
 
 import com.mysema.query.support.Expressions;
-import com.mysema.query.types.Expression;
-import com.mysema.query.types.Ops;
 import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.path.EntityPathBase;
-import com.progbook.persistence.model.*;
+import com.progbook.persistence.model.QAnswer;
 import com.progbook.specification.builder.FilterSpecBuilder;
 
 import java.util.ArrayList;

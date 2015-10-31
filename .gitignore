@@ -3,3 +3,9 @@
 ProgrammingEbook.iml
 build
 src/main/generated
+web/.tmp
+web/dist
+web/bower_components
+web/node_modules
+testdb.mv.db
+testdb.trace.db

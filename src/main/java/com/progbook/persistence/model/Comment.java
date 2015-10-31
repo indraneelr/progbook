@@ -1,5 +1,7 @@
 package com.progbook.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Comment {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
@@ -85,7 +88,7 @@ public class Comment {
 
         Comment comment = (Comment) o;
 
-        if (uuid != null ? !uuid.equals(comment.uuid) : comment.uuid != null) return false;
+        if (this.getUuid() != null ? !this.getUuid().equals(comment.uuid) : comment.uuid != null) return false;
 
         return true;
     }

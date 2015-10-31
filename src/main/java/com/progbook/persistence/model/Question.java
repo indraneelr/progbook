@@ -1,5 +1,7 @@
 package com.progbook.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -9,6 +11,7 @@ import javax.persistence.metamodel.ListAttribute;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "question")
@@ -21,13 +24,10 @@ public class Question {
     @Column
     private String uuid;
 
-    @Column(name = "content")
-    private String content;
-
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -47,8 +47,8 @@ public class Question {
     @JoinColumn(name = "person_id")
     private Person creator;
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
-    private List<ContentBlock> contentBlocks;
+    @Column(name="description")
+    private String description;
 
     public Question() {
     }
@@ -63,14 +63,6 @@ public class Question {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getTitle() {
@@ -136,13 +128,33 @@ public class Question {
 
         Question question = (Question) o;
 
-        if (uuid != null ? !uuid.equals(question.uuid) : question.uuid != null) return false;
+        if (this.getUuid() != null ? !this.getUuid().equals(question.getUuid()) : question.getUuid() != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return uuid != null ? uuid.hashCode() : 0;
+        return this.getUuid() != null ? this.getUuid().hashCode() : 0;
     }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @PrePersist
+    public void initializeDefaultValues(){
+        if(getUuid() == null){
+            setUuid(UUID.randomUUID().toString());
+        }
+        if(dateCreated == null){
+            dateCreated = new Date();
+        }
+    }
+
 }

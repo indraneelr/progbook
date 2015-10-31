@@ -20,6 +20,13 @@ public class Person {
     @Column
     private String uuid;
 
+    public Person(Long id) {
+        this.id = id;
+    }
+
+    public Person() {
+    }
+
     public long getId() {
         return id;
     }
@@ -59,13 +66,13 @@ public class Person {
 
         Person person = (Person) o;
 
-        if (uuid != null ? !uuid.equals(person.uuid) : person.uuid != null) return false;
+        if (this.getUuid() != null ? !this.getUuid().equals(person.getUuid()) : person.getUuid() != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return uuid != null ? uuid.hashCode() : 0;
+        return getUuid() != null ? getUuid().hashCode() : 0;
     }
 }

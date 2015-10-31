@@ -1,11 +1,16 @@
 package com.progbook.specification.builder;
 
+import com.progbook.persistence.model.*;
 import com.progbook.specification.builder.impl.QdslAnswerFilterSpecBuilder;
 import com.progbook.specification.builder.impl.QdslQuestionFilterSpecBuilder;
+import com.progbook.specification.builder.impl.SimpleFilterSpecBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FilterSpecBuilderFactory {
-    private static FilterSpecBuilder qdslAnswerFilterSpecBuilder;
-    private static FilterSpecBuilder qdslQuestionFilterSpecBuilder;
+
+    private static Map<String,FilterSpecBuilder> filterSpecBuilders = new HashMap<>();
 
     public static FilterSpecBuilder getFilterSpecBuilder(Class entityType) {
         switch (entityType.getSimpleName()) {
@@ -14,50 +19,44 @@ public class FilterSpecBuilderFactory {
             case "Question":
                 return getQdslQuestionFilterSpecBuilder();
             case "Language":
-                return getQdslLanguageFilterSpecBuilder();
+                return createSimpleSpecBuilder(Language.class);
             case "QuestionTag":
-                return getQdslQuestionTagFilterSpecBuilder();
+                return createSimpleSpecBuilder(QuestionTag.class);
             case "Vote":
-                return getQdslVoteFilterSpecBuilder();
+                return createSimpleSpecBuilder(Vote.class);
             case "Comment":
-                return getQdslCommentFilterSpecBuilder();
+                return createSimpleSpecBuilder(Comment.class);
             case "Category":
-                return getQdslCategoryFilterSpecBuilder();
+                return createSimpleSpecBuilder(Category.class);
         }
-        return null;
-    }
-
-    private static FilterSpecBuilder getQdslCategoryFilterSpecBuilder() {
-        return null;
-    }
-
-    private static FilterSpecBuilder getQdslCommentFilterSpecBuilder() {
-        return null;
-    }
-
-    private static FilterSpecBuilder getQdslVoteFilterSpecBuilder() {
-        return null;
-    }
-
-    private static FilterSpecBuilder getQdslQuestionTagFilterSpecBuilder() {
-        return null;
-    }
-
-    private static FilterSpecBuilder getQdslLanguageFilterSpecBuilder() {
         return null;
     }
 
     private static FilterSpecBuilder getQdslQuestionFilterSpecBuilder() {
-        if (qdslQuestionFilterSpecBuilder == null) {
-            qdslQuestionFilterSpecBuilder = new QdslQuestionFilterSpecBuilder();
-        }
-        return qdslQuestionFilterSpecBuilder;
+       return createSpecBuilder("question", QdslQuestionFilterSpecBuilder.class);
     }
 
     public static FilterSpecBuilder getQdslAnswerFilterSpecBuilder() {
-        if (qdslAnswerFilterSpecBuilder == null) {
-            qdslAnswerFilterSpecBuilder = new QdslAnswerFilterSpecBuilder();
+        return createSpecBuilder("answer", QdslAnswerFilterSpecBuilder.class);
+    }
+
+    private static <T extends FilterSpecBuilder> FilterSpecBuilder createSpecBuilder(String entityName, Class<? extends FilterSpecBuilder> specBuilderClass) {
+        if (filterSpecBuilders.get(entityName) == null) {
+            try {
+                filterSpecBuilders.put(entityName,specBuilderClass.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e.getMessage());
+            }
         }
-        return qdslAnswerFilterSpecBuilder;
+        return filterSpecBuilders.get(entityName);
+    }
+
+    private static FilterSpecBuilder createSimpleSpecBuilder(Class entityClass) {
+        String entityName = entityClass.getSimpleName().toLowerCase();
+        if (filterSpecBuilders.get(entityName) == null) {
+                filterSpecBuilders.put(entityName,new SimpleFilterSpecBuilder(entityClass, entityName));
+        }
+        return filterSpecBuilders.get(entityName);
     }
 }
