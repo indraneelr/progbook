@@ -1,6 +1,8 @@
 package com.progbook.persistence.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,8 +13,11 @@ public class Person {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    private String name;
+    @Column(name="firstname")
+    private String firstName;
+
+    @Column(name="lastname")
+    private String lastName;
 
     @Column
     private String email;
@@ -35,13 +40,11 @@ public class Person {
         this.id = id;
     }
 
+/*
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+*/
 
     public String getEmail() {
         return email;
@@ -74,5 +77,26 @@ public class Person {
     @Override
     public int hashCode() {
         return getUuid() != null ? getUuid().hashCode() : 0;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @JsonIgnore
+    public String getName() {
+        return getFirstName()+" "+getLastName();
     }
 }

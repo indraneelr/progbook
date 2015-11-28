@@ -4,13 +4,15 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+        classpath 'org.liquibase:liquibase-gradle-plugin:1.1.0'
+        classpath 'org.postgresql:postgresql:9.4-1201-jdbc41'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-
+apply plugin: 'org.liquibase.gradle'
 def querydslVersion =  "3.6.3"
 
 sourceCompatibility = 1.7
@@ -92,9 +94,25 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2:1.4.187")
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.9'
+    compile("org.postgresql:postgresql:9.4-1201-jdbc41")
+//    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.9'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 //    compile "com.mysema.querydsl:querydsl-core:$querydslVersion"
     compile "com.mysema.querydsl:querydsl-jpa:$querydslVersion"
     querydslapt "com.mysema.querydsl:querydsl-apt:$querydslVersion"
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'migration/changelog.xml'
+            url 'jdbc:postgresql:progebook'
+            username 'postgres'
+            password 'xyz123'
+        }
+    }
+
+    // runList = project.ext.runList
+    // runList = 'main'
+    runList = 'main'
 }

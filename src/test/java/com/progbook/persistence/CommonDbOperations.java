@@ -7,7 +7,7 @@ import static com.ninja_squad.dbsetup.Operations.*;
 public class CommonDbOperations {
 
     public static final Operation DELETE_ALL =
-            deleteAllFrom("question_tags_map", "content_block", "comment", "answer", "question", "person", "language", "category", "question_tag");
+            deleteAllFrom("question_tags_map", "comment", "answer", "question", "person", "language", "category", "question_tag");
 
     public static final Operation INSERT_REFERENCE_DATA = sequenceOf(
             insertInto("category")
@@ -32,9 +32,9 @@ public class CommonDbOperations {
 
     public static final Operation INSERT_PERSONS = sequenceOf(
             insertInto("person")
-                    .columns("id", "name", "email", "uuid")
-                    .values("1", "the maker", "maker@world.com", "person-uuid-1")
-                    .values("2", "follower", "follower@world.com", "person-uuid-2")
+                    .columns("id", "firstname","lastname", "email", "uuid")
+                    .values("1", "the","maker", "maker@world.com", "person-uuid-1")
+                    .values("2", "follower","guy", "follower@world.com", "person-uuid-2")
                     .build()
     );
     public static final Operation INSERT_QUESTIONS_STARTER_SET = sequenceOf(
