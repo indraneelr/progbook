@@ -4,6 +4,7 @@ import com.progbook.FilterCriteria;
 import com.progbook.persistence.model.Category;
 import com.progbook.persistence.model.Question;
 import com.progbook.persistence.repository.GenericRepository;
+import com.progbook.representation.command.QuestionSaveRepresentation;
 import com.progbook.representation.query.QuestionRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,14 +35,14 @@ public class QuestionResource {
     }
 
     @Transactional
-    @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Question getById(@PathParam(value = "uuid") String uuid) {
+    QuestionSaveRepresentation getById(@PathVariable(value = "id") String questionId) {
 
         FilterCriteria filterCriteria = new FilterCriteria();
-        filterCriteria.put("uuid", uuid);
-        return questionRepository.findOne(filterCriteria.toPredicate(Question.class));
+        filterCriteria.put("id", questionId);
+        return new QuestionSaveRepresentation(questionRepository.findOne(filterCriteria.toPredicate(Question.class)));
     }
 
     @Transactional

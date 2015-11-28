@@ -116,3 +116,7 @@ liquibase {
     // runList = 'main'
     runList = 'main'
 }
+
+bootRun{
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,address=5000,suspend=n"
+}

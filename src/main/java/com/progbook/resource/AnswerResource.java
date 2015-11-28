@@ -2,9 +2,11 @@ package com.progbook.resource;
 
 import com.progbook.FilterCriteria;
 import com.progbook.persistence.model.Answer;
+import com.progbook.persistence.model.Language;
 import com.progbook.persistence.repository.GenericRepository;
 import com.progbook.representation.command.AnswerSaveRepresentation;
 import com.progbook.representation.query.AnswerRepresentation;
+import com.progbook.representation.query.LanguageRepresention;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class AnswerResource {
 
     @Autowired
     GenericRepository<Answer,Long> answerRepository;
+    @Autowired
+    GenericRepository<Language, Long> languageRepository;
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
@@ -36,10 +40,10 @@ public class AnswerResource {
 
     @Transactional
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public @ResponseBody List<Answer> getAnswersById(@PathVariable(value = "id") String answerId){
+    public @ResponseBody AnswerSaveRepresentation getAnswerById(@PathVariable(value = "id") String answerId){
         FilterCriteria filterCriteria = new FilterCriteria();
-        filterCriteria.put("uuid",answerId);
-        return answerRepository.findAll(filterCriteria.toPredicate(Answer.class));
+        filterCriteria.put("id", answerId);
+        return new AnswerSaveRepresentation(answerRepository.findOne(filterCriteria.toPredicate(Answer.class)));
     }
 
 
@@ -50,5 +54,12 @@ public class AnswerResource {
         return ResponseEntity.ok(new AnswerRepresentation(savedAnswer));
     }
 
-
+    @Transactional
+    @RequestMapping(value = "/languages", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<Collection<LanguageRepresention>> getLanguages() {
+        Collection<Language> languages = languageRepository.findAll();
+        return ResponseEntity.ok(LanguageRepresention.map(languages));
+    }
 }

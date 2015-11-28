@@ -1,0 +1,49 @@
+
+spring:
+  profiles:
+    active:
+
+---
+
+spring:
+  datasource:
+    url: jdbc:h2:file:C:/dev/projects/Java/ProgrammingEbook/testdb;DB_CLOSE_DELAY=-1;TRACE_LEVEL_SYSTEM_OUT=2
+    username:
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      generate_statistics: true
+      ddl-auto: update
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql:progebook
+    username: postgres
+    password: xyz123
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    show-sql: false
+    hibernate:
+      generate_statistics: true
+      ddl-auto: update
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:postgresql:test-progebook
+    username: postgres
+    password: xyz123
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    show-sql: false
+    hibernate:
+      generate_statistics: true
+      ddl-auto: update

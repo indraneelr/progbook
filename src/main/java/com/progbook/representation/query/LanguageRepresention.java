@@ -2,11 +2,15 @@ package com.progbook.representation.query;
 
 import com.progbook.persistence.model.Language;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class LanguageRepresention {
     private Long id;
     private String name;
     private String uuid;
     private String version;
+    private String nameAndVersion;
 
     public LanguageRepresention() {
     }
@@ -51,5 +55,21 @@ public class LanguageRepresention {
         this.version = version;
     }
 
+    public String getNameAndVersion(){
+//        if (nameAndVersion == null){
+//            nameAndVersion = name +" - "+version;
+//        }
+        return name +" - "+version;
+//        return nameAndVersion;
+    }
 
+    public static Collection<LanguageRepresention> map(Collection<Language> languages) {
+        Collection<LanguageRepresention> languageRepresentions = new ArrayList<>();
+        if (languages != null) {
+            for (Language language : languages) {
+                languageRepresentions.add(new LanguageRepresention(language));
+            }
+        }
+        return languageRepresentions;
+    }
 }

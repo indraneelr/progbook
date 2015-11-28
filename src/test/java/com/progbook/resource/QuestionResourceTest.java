@@ -91,7 +91,12 @@ public class QuestionResourceTest {
 
     @Test
     public void testGetById() throws Exception {
-
+        dbSetupTracker.skipNextLaunch();
+        MvcResult mvcResult = mockMvc.perform(get("/questions/100").accept(MediaType.APPLICATION_JSON)).andReturn();
+        String contentAsString = mvcResult.getResponse().getContentAsString();
+        System.out.println(contentAsString);
+        assertNotNull(contentAsString);
+        assertThat(contentAsString.length()>10,Is.is(true));
     }
 
     @Test

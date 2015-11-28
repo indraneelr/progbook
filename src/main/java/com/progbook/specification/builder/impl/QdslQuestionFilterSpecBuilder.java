@@ -27,6 +27,7 @@ public class QdslQuestionFilterSpecBuilder extends FilterSpecBuilder {
         for (String filterParamName : filterParams.keySet()) {
             switch (filterParamName){
                 case "uuid":expressions.add(withUuid(filterParams.get(filterParamName))); break;
+                case "id":expressions.add(withId(filterParams.get(filterParamName))); break;
                 case "title":expressions.add(ifTitleContains(filterParams.get(filterParamName))); break;
                 case "category":expressions.add(withCategory(filterParams.get(filterParamName))); break;
                 case "tags":expressions.add(withTags(filterParams.get(filterParamName))); break;

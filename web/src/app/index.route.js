@@ -14,12 +14,19 @@
         controller: 'BookpageController',
         controllerAs: 'main'
       })
-      .state('addQuestion', {
-        url: '/addQuestion',
-        templateUrl: 'app/addQuestion/addquestion.view.html',
-        controller: 'AddQuestionController',
+      .state('saveQuestion', {
+        url: '/saveQuestion/:questionId',
+        templateUrl: 'app/saveQuestion/savequestion.view.html',
+        controller: 'SaveQuestionController',
         controllerAs: 'qform'
-      });
+      })
+      .state('saveAnswer', {
+        url: '/:questionId/saveAnswer/:answerId',
+        templateUrl: 'app/saveAnswer/saveanswer.view.html',
+        controller: 'SaveAnswerController',
+        controllerAs: 'ansform'
+      })
+      ;
 
     $urlRouterProvider.otherwise('/');
   }

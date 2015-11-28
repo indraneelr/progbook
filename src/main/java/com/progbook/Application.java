@@ -2,6 +2,7 @@ package com.progbook;
 
 import com.progbook.persistence.model.Answer;
 import com.progbook.persistence.model.Category;
+import com.progbook.persistence.model.Language;
 import com.progbook.persistence.model.Question;
 import com.progbook.persistence.repository.GenericRepository;
 import org.h2.server.web.WebServlet;
@@ -49,6 +50,14 @@ public class Application implements ApplicationContextAware{
         EntityManager entityManager = ctx.getBean(EntityManager.class);
         JpaEntityInformation<Category,Long> jpaEntityInformation= new JpaMetamodelEntityInformation<>(Category.class,entityManager.getMetamodel());
         GenericRepository<Category,Long> genericRepository = new GenericRepository<>(jpaEntityInformation,entityManager);
+        return genericRepository;
+    }
+
+    @Bean
+    public GenericRepository<Language,Long> getLanguageRepository(){
+        EntityManager entityManager = ctx.getBean(EntityManager.class);
+        JpaEntityInformation<Language,Long> jpaEntityInformation= new JpaMetamodelEntityInformation<>(Language.class,entityManager.getMetamodel());
+        GenericRepository<Language,Long> genericRepository = new GenericRepository<>(jpaEntityInformation,entityManager);
         return genericRepository;
     }
 

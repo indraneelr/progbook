@@ -3,7 +3,7 @@
 
     angular
         .module('web')
-        .service('AnswerService', AnswerService);
+        .service('answerService', AnswerService);
 
 
     /** @ngInject */
@@ -12,12 +12,16 @@
             return $http.get(answerUrls.query);
         }
 
-        this.getById = function(qid){
-            return $http.get(answerUrls.query+"/"+qid);
+        this.getById = function(aid){
+            return $http.get(answerUrls.query+"/"+aid);
         }
 
         this.save = function(answer){
             return $http.post(answerUrls.command,answer)
+        }
+
+        this.getLanguages = function(){
+            return $http.get(answerUrls.query+"/languages");
         }
     }
 })()

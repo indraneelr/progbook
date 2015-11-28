@@ -15,6 +15,11 @@ public abstract class FilterSpecBuilder {
         return entityUuid.eq(uuid);
     }
 
+    protected BooleanExpression withId(String id) {
+        SimplePath<Long> entityId = Expressions.path(Long.class, getMainEntity(), "id");
+        return entityId.eq(Long.valueOf(id));
+    }
+
     protected abstract EntityPathBase getMainEntity();
 
     public abstract Predicate build(Map<String, String> filterParams);

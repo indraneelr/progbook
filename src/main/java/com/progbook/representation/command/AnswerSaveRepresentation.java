@@ -16,6 +16,21 @@ public class AnswerSaveRepresentation {
     private String uuid;
     private String content;
 
+    public AnswerSaveRepresentation() {
+    }
+
+    public AnswerSaveRepresentation(Answer answer) {
+        if(answer != null){
+            id = answer.getId();
+            language = new RelatedEntity(answer.getLanguage().getId());
+            dateCreated = answer.getDateCreated();
+            question = new RelatedEntity(answer.getQuestion().getId());
+            creator = new RelatedEntity(answer.getCreator().getId());
+            uuid = answer.getUuid();
+            content = answer.getContent();
+        }
+    }
+
     public long getId() {
         return id;
     }

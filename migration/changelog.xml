@@ -10,14 +10,14 @@
     <!-- <preConditions>
          <runningAs username="liquibase"/>
      </preConditions>-->
-    <property name="uuid" value="uuid_generate_v1mc()" dbms="postgresql"/>
+    <property name="uuid" value="cast(uuid_generate_v1mc() as varchar(50))" dbms="postgresql"/>
     <changeSet id="1" author="neel">
 
         <createTable tableName="person">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="uuid" type="UUID">
+            <column name="uuid" type="varchar(50)">
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="firstname" type="varchar(50)"/>
@@ -47,7 +47,7 @@
             </column>
             <column name="name" type="varchar(50)"/>
             <column name="description" type="varchar(255)"/>
-            <column name="uuid" type="UUID" defaultValueComputed="${uuid}">
+            <column name="uuid" type="varchar(50)" defaultValueComputed="${uuid}">
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="version" type="varchar(63)"/>
@@ -57,7 +57,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="uuid" type="UUID">
+            <column name="uuid" type="varchar(50)">
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="title" type="text"/>
@@ -85,7 +85,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="uuid" type="UUID">
+            <column name="uuid" type="varchar(50)">
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="content" type="text"/>
@@ -119,7 +119,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="uuid" type="UUID">
+            <column name="uuid" type="varchar(50)">
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="date_created" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
@@ -172,7 +172,7 @@
     </changeSet>
     <changeSet id="4" author="neel">
         <insert schemaName="public" tableName="person">
-            <column name="uuid" valueComputed="uuid_generate_v1mc()"></column>
+            <column name="uuid" valueComputed="${uuid}"></column>
             <column name="firstname">neel</column>
             <column name="lastname">rr</column>
             <column name="email">codefugue@gmail.com</column>
