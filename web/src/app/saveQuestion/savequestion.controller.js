@@ -6,7 +6,7 @@
           .controller('SaveQuestionController', SaveQuestionController);
 
     /** @ngInject */
-    function SaveQuestionController(questionService,$stateParams) {
+    function SaveQuestionController(questionService,$state) {
         var self = this;
         var setCreator = function(question){
             question.creator= {
@@ -22,8 +22,8 @@
         questionService.getCategories().success(function(categories){
             angular.copy(categories,self.categories);
         });
-        if($stateParams.questionId){
-            questionService.getById($stateParams.questionId).success(function(question){
+        if($state.params.questionId){
+            questionService.getById($state.params.questionId).success(function(question){
                 angular.copy(question,self.question);
             });
         }

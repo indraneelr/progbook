@@ -1,6 +1,5 @@
 <section  id="question">
-    <h2 ng-bind="content.currentQ.title">
-    </h2>
+    <span><h3 ng-bind="content.currentQ.title"></h3><a ui-sref="saveQuestion.edit({questionId:content.currentQ.id})">edit</a></span>
     <span class="text question">
         <span ng-bind="content.currentQ.description"></span>
     </span>

@@ -14,14 +14,32 @@
         controller: 'BookpageController',
         controllerAs: 'main'
       })
+      .state('home.question', {
+        url: ':questionId/',
+        templateUrl: 'app/main/bookpage.html',
+        controller: 'BookpageController',
+        controllerAs: 'main'
+      })
       .state('saveQuestion', {
-        url: '/saveQuestion/:questionId',
+        url: '/saveQuestion',
+        templateUrl: 'app/saveQuestion/savequestion.view.html',
+        controller: 'SaveQuestionController',
+        controllerAs: 'qform'
+      })
+      .state('saveQuestion.edit', {
+        url: '/:questionId',
         templateUrl: 'app/saveQuestion/savequestion.view.html',
         controller: 'SaveQuestionController',
         controllerAs: 'qform'
       })
       .state('saveAnswer', {
-        url: '/:questionId/saveAnswer/:answerId',
+        url: '/:questionId/saveAnswer',
+        templateUrl: 'app/saveAnswer/saveanswer.view.html',
+        controller: 'SaveAnswerController',
+        controllerAs: 'ansform'
+      })
+      .state('saveAnswer.edit', {
+        url: '/:answerId',
         templateUrl: 'app/saveAnswer/saveanswer.view.html',
         controller: 'SaveAnswerController',
         controllerAs: 'ansform'

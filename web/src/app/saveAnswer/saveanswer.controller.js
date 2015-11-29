@@ -6,7 +6,7 @@
           .controller('SaveAnswerController', SaveAnswerController);
 
     /** @ngInject */
-    function SaveAnswerController(answerService,$stateParams) {
+    function SaveAnswerController(answerService,$state) {
         var self = this;
         var setCreator = function(answer){
             answer.creator= {
@@ -15,7 +15,7 @@
         }
         self.answer = {
             question :{
-                id:$stateParams.questionId
+                id:$state.params.questionId
             }
         }
         setCreator(self.answer);
@@ -26,8 +26,8 @@
         answerService.getLanguages().success(function(languages){
             angular.copy(languages,self.languages);
         });
-        if($stateParams.answerId){
-            answerService.getById($stateParams.answerId).success(function(answer){
+        if($state.params.answerId){
+            answerService.getById($state.params.answerId).success(function(answer){
                 angular.copy(answer,self.answer);
             });
         }

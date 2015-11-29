@@ -3,16 +3,17 @@
 
     angular
     .module('web')
-    .directive("answer",function(){
+    .directive("answer",function($state){
 
         return {
             restrict:"AE",
             templateUrl:"/app/main/directives/answer/answer.view.html",
             scope:{
-                content:"="
+                content:"=",
+                questionId:"="
             },
             controller:function($scope){
-//                console.log("in answer directive")
+
             },
             controllerAs:"vm"
         }

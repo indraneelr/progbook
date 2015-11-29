@@ -13,6 +13,7 @@ var _ = require('lodash');
 
 gulp.task('styles', function () {
   var sassOptions = {
+    includePaths :['./scss'],
     style: 'expanded'
   };
 

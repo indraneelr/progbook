@@ -1,15 +1,16 @@
-<div class="page" layout="row">
-    <aside flex="30" id="toc">
-        <h3>Questions</h3>
+<div class="page" class="row">
+    <aside class="col-sm-3" id="toc">
+        <span><h3>Questions</h3><a ui-sref="saveQuestion">add</a></span>
         <nav ng-repeat="question in main.questions">
-            <span><a ng-href="" ng-click="main.setCurrentQ($index)">{{question.title}}</a></span>
+            <!--<span><a ng-href="" ng-click="main.setCurrentQ($index)">{{question.title}}</a></span>-->
+            <span><a ui-sref="home.question({questionId:question.id})">{{question.title}}</a></span>
         </nav>
     </aside>
-    <main flex layout="column">
+    <main class="col-sm-9">
         <question content="main.questionContainer"></question>
         <section id="answers">
-            <h3>Answers</h3>
-            <answer ng-repeat="answer in main.getAnswers()" content="answer"></answer>
+            <span><h3>Answers</h3><a ui-sref="saveAnswer({questionId:main.questionContainer.currentQ.id})">add</a></span>
+            <answer ng-repeat="answer in main.getAnswers()" content="answer" question-id="main.questionContainer.currentQ.id"></answer>
         </section>
     </main>
 </div>
