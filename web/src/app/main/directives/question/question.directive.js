@@ -3,8 +3,10 @@
 
     angular
     .module('web')
-    .directive("question",function(){
+    .directive("question",question);
 
+    /** @ngInject */
+    function   question(modalService){
         return {
             restrict:"AE",
             templateUrl:"/app/main/directives/question/question.view.html",
@@ -12,9 +14,12 @@
                 content:"="
             },
             controller:function($scope){
-//                console.log("in question directive")
+                var self = this;
+                self.saveQuestion = function(question){
+                    modalService.openSaveQuestionModal(question);
+                }
             },
             controllerAs:"vm"
         }
-    });
+    };
 })()

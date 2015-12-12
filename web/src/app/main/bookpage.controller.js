@@ -6,7 +6,7 @@
         .controller('BookpageController', BookpageController);
 
     /** @ngInject */
-    function BookpageController(questionService,$stateParams,$rootScope,$state) {
+    function BookpageController(questionService,answerService,modalService,$stateParams,$rootScope,$state) {
         var self = this;
         var currentIndex = 0;
         self.questions = [];
@@ -47,7 +47,17 @@
         self.getAnswers = function(){
             return self.questionContainer.currentQ.answers;
         }
-  }
 
+        answerService.getLanguages().success(function(languages){
+            self.languages = languages;
+        });
 
+        self.saveQuestion = function(question){
+            modalService.openSaveQuestionModal(question);
+        }
+
+        self.selectLanguage = function(language){
+            self.selectedLanguage = language;
+        }
+    }
 })();

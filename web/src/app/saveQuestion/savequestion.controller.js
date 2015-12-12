@@ -6,7 +6,7 @@
           .controller('SaveQuestionController', SaveQuestionController);
 
     /** @ngInject */
-    function SaveQuestionController(questionService,$state) {
+    function SaveQuestionController(questionService,$uibModalInstance,questionToSave) {
         var self = this;
         var setCreator = function(question){
             question.creator= {
@@ -18,12 +18,13 @@
         self.categories =[];
         self.submit = function(){
             questionService.save(self.question);
+            $uibModalInstance.close(self.question)
         }
         questionService.getCategories().success(function(categories){
             angular.copy(categories,self.categories);
         });
-        if($state.params.questionId){
-            questionService.getById($state.params.questionId).success(function(question){
+        if(!_.isEmpty(questionToSave)){
+            questionService.getById(questionToSave.id).success(function(question){
                 angular.copy(question,self.question);
             });
         }

@@ -1,28 +1,21 @@
-<div>
-  <form ng-submit="qform.submit()">
-    <div class="row">
-      <div class="large-12 columns">
-        <label>Title
-          <input type="text" placeholder="title" ng-model="qform.question.title" />
-        </label>
-      </div>
+<form class="container-padding" ng-submit="qform.submit()">
+    <div class="form-group">
+        <label for="qform-title">Title</label>
+        <input class="form-control" type="text" id="qform-title" placeholder="title"
+               ng-model="qform.question.title"/>
     </div>
-    <div class="row">
-      <div class="large-12 columns">
-        <label>Description
-          <textarea placeholder="details.." ng-model="qform.question.description"></textarea>
-        </label>
-      </div>
+    <div class="form-group">
+        <label for="qform-desc">Description</label>
+            <textarea class="form-control" id="qform-desc" placeholder="details.."
+                      ng-model="qform.question.description"></textarea>
     </div>
-    <div class="row">
-      <div class="large-12 columns">
-        <label>Category
-          <select ng-options="category as category.name for category in qform.categories track by category.id" ng-model="qform.question.category"></select>
-        </label>
-      </div>
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-control"
+                ng-options="category as category.name for category in qform.categories track by category.id"
+                ng-model="qform.question.category"></select>
     </div>
-    <div class="row">
-      <input type="submit" id="submit" value="Submit" />
+    <div class="form-group">
+        <input type="submit" id="submit" value="Submit"/>
     </div>
-  </form>
-</div>
+</form>
