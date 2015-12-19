@@ -13,11 +13,23 @@
             scope:{
                 content:"="
             },
-            controller:function($scope){
-                var self = this;
-                self.saveQuestion = function(question){
-                    modalService.openSaveQuestionModal(question);
+
+            link:function($scope){
+                $scope.contentAsHtml =""
+                var updateContentAsHtml = function(){
+                    try{
+                        var parsedJson= JSON.parse($scope.content.description)||{};
+                        $scope.contentAsHtml = parsedJson.asHtml;
+                    }
+                    catch(ex){
+                        $scope.contentAsHtml =  $scope.content.description;
+                    }
                 }
+                $scope.$watch("content.description",function(newVal,oldVal){
+                    if(newVal !== oldVal){
+                        updateContentAsHtml();
+                    }
+                });
             },
             controllerAs:"vm"
         }

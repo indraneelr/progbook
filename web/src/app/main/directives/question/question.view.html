@@ -1,6 +1,6 @@
 <section  id="question">
-    <span><h3 ng-bind="content.currentQ.title"></h3><a ng-click="vm.saveQuestion(content.currentQ)">edit</a></span>
+    <span><h3 ng-bind="content.title"></h3><a ui-sref="saveQuestion.edit({questionId:content.id})">edit</a></span>
     <span class="text question">
-        <span ng-bind="content.currentQ.description"></span>
+        <span ng-bind-html="contentAsHtml"></span>
     </span>
 </section>

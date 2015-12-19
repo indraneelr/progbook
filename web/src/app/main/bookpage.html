@@ -14,7 +14,7 @@
         <uib-tabset type="pills">
             <uib-tab heading="{{language.nameAndVersion}}" ng-repeat="language in main.languages" select="main.selectLanguage(language.nameAndVersion)"/>
         </uib-tabset>
-        <question content="main.questionContainer"></question>
+        <question content="main.questionContainer.currentQ"></question>
         <section id="answers">
             <span><h3>Answers</h3><a ui-sref="saveAnswer({questionId:main.questionContainer.currentQ.id})">add</a></span>
             <answer ng-repeat="answer in main.getAnswers() | filter: answer.language.nameAndVersion=main.selectedLanguage" content="answer" question-id="main.questionContainer.currentQ.id"></answer>

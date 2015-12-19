@@ -1,6 +1,6 @@
 <section>
     <a ui-sref="saveAnswer.edit({answerId:content.id,questionId:questionId})">edit</a>
     <span class="text answer">
-      <span ng-bind="content.content"></span>
+      <span ng-bind-html="contentAsHtml"></span>
     </span>
 </section>

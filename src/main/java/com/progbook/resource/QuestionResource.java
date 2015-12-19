@@ -49,9 +49,9 @@ public class QuestionResource {
     @RequestMapping(method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE})
     public
     @ResponseBody
-    ResponseEntity<Question> addQuestion(@RequestBody Question question) {
+    ResponseEntity<QuestionSaveRepresentation> addQuestion(@RequestBody Question question) {
         Question savedQuestion = questionRepository.save(question);
-        return ResponseEntity.ok(savedQuestion);
+        return ResponseEntity.ok(new QuestionSaveRepresentation(savedQuestion));
     }
 
     @Transactional

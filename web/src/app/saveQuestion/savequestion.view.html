@@ -5,9 +5,9 @@
                ng-model="qform.question.title"/>
     </div>
     <div class="form-group">
-        <label for="qform-desc">Description</label>
-            <textarea class="form-control" id="qform-desc" placeholder="details.."
-                      ng-model="qform.question.description"></textarea>
+
+            <!--<text-angular  ng-model="qform.question.description" > </text-angular>-->
+        <texteditor ng-if="qform.question.description" content="qform.question.description"></texteditor>
     </div>
     <div class="form-group">
         <label>Category</label>

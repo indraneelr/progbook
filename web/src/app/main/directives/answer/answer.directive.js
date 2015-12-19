@@ -12,8 +12,15 @@
                 content:"=",
                 questionId:"="
             },
-            controller:function($scope){
-
+            link:function($scope,elm,attr){
+                $scope.contentAsHtml =""
+                try{
+                    var parsedJson= JSON.parse($scope.content.content)||{};
+                    $scope.contentAsHtml = parsedJson.asHtml
+                }
+                catch(ex){
+                    $scope.contentAsHtml =  $scope.content.content
+                }
             },
             controllerAs:"vm"
         }

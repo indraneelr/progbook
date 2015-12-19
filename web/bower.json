@@ -16,7 +16,14 @@
     "bootstrap-sass": "~3.3.6",
     "jquery": "~2.1.4",
     "angular-bootstrap": "~0.14.3",
+<<<<<<< HEAD
     "textAngular": "~1.4.6"
+=======
+    "font-awesome": "fontawesome#~4.5.0",
+    "highlightjs": "~9.0.0",
+    "quill": "~0.20.1",
+    "markdown-it": "~5.0.2"
+>>>>>>> introduced markdown based editors for editing content
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"

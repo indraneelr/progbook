@@ -1,29 +1,20 @@
-<div>
-  <form ng-submit="ansform.submit()">
-    <div class="row">
-      <div class="large-12 columns">
-        <label>Description
-          <textarea placeholder="answer.." ng-model="ansform.answer.content"></textarea>
-        </label>
-      </div>
+<form class="container-padding" ng-submit="ansform.submit()">
+    <div class="form-group">
+        <label>Description</label>
+        <!--<text-angular name="answer-content" ng-model="ansform.answer.content"></text-angular>-->
+        <texteditor ng-if="ansform.answer.content" name="answer-content" content="ansform.answer.content"></texteditor>
     </div>
-    <div class="row">
-      <div class="large-12 columns">
+    <div class="form-group">
         <label>Question
-          {{ansform.answer.question.id}}
+            {{ansform.answer.question.id}}
         </label>
-      </div>
     </div>
-    <div class="row">
-      <div class="large-12 columns">
-        <label>Language
-          <select ng-options="language as language.nameAndVersion for language in ansform.languages track by language.id" ng-model="ansform.answer.language"></select>
-        </label>
-      </div>
+    <div class="form-group">
+        <label>Language</label>
+        <select
+            ng-options="language as language.nameAndVersion for language in ansform.languages track by language.id"
+            ng-model="ansform.answer.language">
+        </select>
     </div>
-
-    <div class="row">
-      <input type="submit" id="submit" value="Submit" />
-    </div>
-  </form>
-</div>
+    <input type="submit" id="submit" value="Submit"/>
+</form>
