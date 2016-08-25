@@ -29,14 +29,12 @@
             }
         };
         questionService.get().success(function(questions){
-            console.log($state);
             self.questions = angular.copy(questions,self.questions);
             self.questionsByCategories = _.groupBy(self.questions,"category")
             self.setCurrentQ($state.params.questionId);
         });
 
         $rootScope.$on('$stateChangeSuccess',function(event){
-            console.log($state);
             self.setCurrentQ($state.params.questionId);
         });
 
