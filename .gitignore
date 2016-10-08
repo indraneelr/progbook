@@ -9,3 +9,4 @@ web/bower_components
 web/node_modules
 testdb.mv.db
 testdb.trace.db
+.DS_Store
